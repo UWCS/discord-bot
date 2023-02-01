@@ -11,4 +11,5 @@ class Settings(BaseSettings):
     name: str = "Discord Bot"
 
     class Config:
-        env_prefix = "BOT_"
+        env_file = ".env"  # load from a .env file
+        env_prefix = "BOT_"  # env vars are prefixed with BOT_

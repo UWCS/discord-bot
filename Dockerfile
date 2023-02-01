@@ -1,6 +1,6 @@
-FROM python:3.11 AS builder
+FROM python:3.11 
 
-RUN pip install poetry
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 COPY pyproject.toml poetry.lock /app/
 
@@ -11,17 +11,6 @@ WORKDIR /app
 
 RUN poetry install --no-interaction
 
-FROM python:3.11 AS runtime
+ADD discord_bot /app/discord_bot
 
-WORKDIR /app
-
-# copy venv into runtime
-COPY --from=builder /app/.venv/ /app/.venv/
-
-# add venv to path
-ENV PATH=".venv/bin:$PATH"
-
-# copy in discord_bot directory
-COPY discord_bot /app
-
-CMD [ "python", "discord_bot" ] 
+CMD [ "python3", "discord_bot" ] 
