@@ -12,20 +12,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Install poetry
+        run: pipx install poetry
+
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
           cache: poetry
-      - name: Install pipenv and dependencies
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          poetry install --sync
+
+      - name: Install dependencies
+        run: poetry install --sync
+
       - name: Check formatting with isort and black
         run: |
           poetry run isort --check-only .
           poetry run black --check .
+
       - name: Check types with mypy
         run: poetry run mypy .
+
       - name: Test with pytest
         run: pipenv run pytest -v
 
