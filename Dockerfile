@@ -2,15 +2,14 @@ FROM python:3.11 AS builder
 
 RUN pip install poetry
 
-# Tell poetry to create venv in the current directory
-RUN poetry config virtualenvs.in-project true
+COPY pyproject.toml poetry.lock /app/
 
-# only copy in lockfile - install from locked deps
-COPY poetry.lock /app/poetry.lock
+# Tell poetry not to create a virtualenv - we don't need one in docker
+RUN poetry config virtualenvs.create false
 
 WORKDIR /app
 
-RUN poetry install
+RUN poetry install --no-interaction
 
 FROM python:3.11 AS runtime
 
