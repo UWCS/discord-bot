@@ -9,8 +9,12 @@ RUN poetry config virtualenvs.create false
 
 WORKDIR /app
 
-RUN poetry install --no-interaction
+# don't install dev deps
+# fail the build if lockfile not up to date
+# don't try to prompt us for stuff
+RUN poetry install --without dev --sync --no-interaction
 
+# copy source files in
 ADD discord_bot /app/discord_bot
 
 CMD [ "python3", "discord_bot" ] 
