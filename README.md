@@ -1,6 +1,6 @@
 # Discord Bot 
 
-This repo is a template that can be used as a starting point for building a Discord bot using Python. 
+This repo is a template that can be used as a starting point for building a Discord bot using Python. Click 'Use this template' in the top right to get started.
 
 ## Poetry
 
